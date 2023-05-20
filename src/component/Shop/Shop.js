@@ -7,7 +7,6 @@ const Shop = () => {
   
   const [cart, setCart] = useState([]);
   const AddCartHandle = (product)  => {
-      console.log('product added', product);
       const newCart = [...cart, product];
       setCart(newCart);
   }
