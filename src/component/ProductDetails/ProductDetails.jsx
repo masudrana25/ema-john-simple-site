@@ -5,8 +5,10 @@ import { useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import fakeData from '../../fakeData/products.JSON';
 import Product from '../Product/Product';
+import './ProductDetails.css'
+
 const ProductDetails = () => {
-  // const { productKey } = useParams();
+
   const [ Data, setProduct ] = useState([]);
   useEffect(() => {
     fetch(fakeData)
@@ -16,30 +18,28 @@ const ProductDetails = () => {
   const { productKey } = useParams();
   // console.log(productKey)
   // console.log(Data);
-  const productInfo = Data.find(pd => pd.key === productKey);
-  //  console.log(product.name);
-  // const { name } = productInfo.name;
-  // const { img } = productInfo.img;
-  // const { seller } = productInfo.seller;
-  // const { stock } = productInfo.stock;
-  //  const { price } = productInfo.price;
+  // if (Data.length !== 0) {
+  //     const productInfo = Data.find(pd => pd.key === productKey);
+  //   const { name, img, seller, stock, price } = productInfo;
+  //   const detailss = {name, img, seller, stock, price};
+    
+  // }
+  // const arrayData = JSON.parse(fakeData);
+  // console.log(fakeData);
+  const productInfo = Data?.find(pd => pd.key ===productKey);
+
+  // console.log(productInfo?.name );
+  // const { name } = productInfo?.name;
+  // const { img } = productInfo?.img;
+  // const { seller } = productInfo?.seller;
+  // const { stock } = productInfo?.stock;
+  // const { price } = productInfo?.price;
+  // console.log(name,img,seller,price,stock);
   
   return (
-    <div>
-      <h1>Product Details Coming Sooooonnnn</h1>
-      {/* <div className='product'>
-        <div className="img">
-          <img src={img} alt="" />
-        </div>
-      <div className="discription">
-        <h4 className='name'>{name}</h4>
-        <br />
-        <p><small>by {seller}</small></p>
-        <p>${price}</p>
-        <p><small>only {stock} left in stock-order soon</small></p>
-        <button className='button'><FontAwesomeIcon icon={faShoppingCart} />add to cart</button>
-      </div>
-    </div>  */}
+    <div className='product-deatils'>
+      <h1 className='aaa'> Items Details</h1>
+      <Product showAddToCart = {false} product = {productInfo}></Product>
     </div>
   );
 };

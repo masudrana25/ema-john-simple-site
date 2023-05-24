@@ -22,7 +22,7 @@ const Shop = () => {
     <div className='shop'>
       <div className="shop-product">
         {
-        Data.map(data => <Product product ={data} AddCartHandle={AddCartHandle}></Product>)
+        Data.map(data => <Product product ={data} AddCartHandle={AddCartHandle} showAddToCart ={true}></Product>)
           }
       </div>
       
