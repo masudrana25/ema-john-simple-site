@@ -11,11 +11,11 @@ const ReviewItem = (props) => {
         </div>
       <div className="discription">
         <h4 className='name'>{items?.name}</h4>
-        <br />
+        <p>Quantity : I can't added this 😥😥😥😥😥</p>
         <p><small>by {items?.seller}</small></p>
         <p>${items?.price}</p>
         <p><small>only {items?.stock} left in stock-order soon</small></p>
-        {/* {props.showAddToCart && <button className='button' onClick={()=>AddCartHandle(props.product)}><FontAwesomeIcon icon={faShoppingCart} />add to cart</button>} */}
+        <button className='button'> Remove</button>
       </div>
     </div>
       
