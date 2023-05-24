@@ -3,12 +3,14 @@ import './Shop.css';
 import fakeData from '../../fakeData/products.JSON';
 import Product from '../Product/Product';
 import Cart from '../Cart/Cart';
+import { addToDb } from '../../utilities/fakedb';
 const Shop = () => {
   
   const [cart, setCart] = useState([]);
   const AddCartHandle = (product)  => {
       const newCart = [...cart, product];
-      setCart(newCart);
+    setCart(newCart);
+    addToDb(product.key)
   }
 
   const [Data, setData] = useState([]); 
