@@ -14,10 +14,17 @@ const Review = () => {
  
     const savedCartData = getStoredCart();
   const savedProductKeys = Object.keys(savedCartData);
-  console.log(savedProductKeys[0]);
+  // console.log(savedCartData.B01M18UZF5);
 
-    const productInfo = savedProductKeys.map(key => Data?.find(pd => pd?.key === key));
-
+  // const productInfo = savedProductKeys.map(key => Data?.find(pd => pd?.key === key));
+  const productInfo = savedProductKeys.map(SearchKey => Data?.find(pd => {
+    const product = pd?.key === SearchKey;
+    if (pd?.key === SearchKey) {
+      pd.quantity = savedCartData[SearchKey];
+    }
+    return product;
+  }));
+   console.log(productInfo);
 
   return (
     <div>
