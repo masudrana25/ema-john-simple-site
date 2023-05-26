@@ -5,7 +5,17 @@ import Product from '../Product/Product';
 import Cart from '../Cart/Cart';
 import { addToDb } from '../../utilities/fakedb';
 const Shop = () => {
+//   const aaa = json.parse(fakeData);
+//  const bbbb= aaa.slice(0,10)
+//   console.log(bbbb);
   
+   const [Data, setData] = useState([]); 
+  useEffect(() => {
+    fetch(fakeData)
+      .then(res => res.json())
+      .then(data => setData(data))
+  }, []);
+
   const [cart, setCart] = useState([]);
   const AddCartHandle = (product)  => {
       const newCart = [...cart, product];
@@ -13,12 +23,7 @@ const Shop = () => {
     addToDb(product.key)
   }
 
-  const [Data, setData] = useState([]); 
-  useEffect(() => {
-    fetch(fakeData)
-      .then(res => res.json())
-      .then(data => setData(data))
-  }, []);
+ 
 
   return (
     <div className='shop'>

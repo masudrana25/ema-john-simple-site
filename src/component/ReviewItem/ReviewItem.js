@@ -11,7 +11,8 @@ const ReviewItem = (props) => {
         </div>
       <div className="discription">
         <h4 className='name'>{items?.name}</h4>
-        <p>Quantity : I can't added this 😥😥😥😥😥</p>
+          <p>Quantity : I can't added this 😥😥😥😥😥</p>
+          <p>Quantity : {items.quantity}</p>
         <p><small>by {items?.seller}</small></p>
         <p>${items?.price}</p>
         <p><small>only {items?.stock} left in stock-order soon</small></p>
