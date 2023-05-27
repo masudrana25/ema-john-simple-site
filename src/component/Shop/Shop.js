@@ -5,6 +5,7 @@ import fakeData from '../fakeData/index';
 import Product from '../Product/Product';
 import Cart from '../Cart/Cart';
 import { addToDb } from '../../utilities/fakedb';
+import { addToDatabaseCart } from '../utilities/databaseManager.js';
 const Shop = () => {
   const Data = fakeData.slice(0, 10);
   const [cart, setCart] = useState([]);

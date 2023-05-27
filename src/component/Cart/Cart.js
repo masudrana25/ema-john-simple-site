@@ -13,8 +13,8 @@ const Cart = (props) => {
 
   let itemsPrice = 0;
   for (let i = 0; i < cart.length; i++) {
-    const element = cart[i].price;
-    itemsPrice = itemsPrice + element;    
+    const product = cart[i];
+    itemsPrice = itemsPrice + product.price * product.quantity;    
   };
 
   let shipping = 0;
