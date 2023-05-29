@@ -144,7 +144,8 @@ const FbProvider = new FacebookAuthProvider();
       isFieldCheck = /\S+@\S+\.\S+/.test(event.target.value);
     };
     if (event.target.name === 'password') {
-      isFieldCheck = /(?=.*[a-zA-Z])(?=.{8,})/.test(event.target.value);
+      // isFieldCheck = /(?=.*[a-zA-Z])(?=.{8,})/.test(event.target.value);
+      isFieldCheck = event.target.value;
       // must contain Capital and small letter and length should be greater than 8  
     };
     if (isFieldCheck) {
@@ -172,7 +173,7 @@ const FbProvider = new FacebookAuthProvider();
     <>
       <div style={{textAlign:'center'}} className="signIn-signOut">
       
-      {
+      {/* {
         user.isSignIn ? <button onClick={handleSignOut}>Sign Out </button> :
           <button onClick={handleClick}>SignIn with Google </button>
       }
@@ -187,7 +188,7 @@ const FbProvider = new FacebookAuthProvider();
         )
         }
         <br />
-        <button className='fb-button' onClick={handleFBclick}>Sign in Using Facebook</button>
+        <button className='fb-button' onClick={handleFBclick}>Sign in Using Facebook</button> */}
       </div> <br /><br />
 
       <div style={{textAlign:'center'}} className='form-section'>

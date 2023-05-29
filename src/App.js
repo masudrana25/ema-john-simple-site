@@ -20,7 +20,6 @@ function App() {
     <UserContext.Provider value={[loginUser, setLoginUser]}>
 
       <BrowserRouter>
-        <h1>email: {loginUser.email}</h1>
         <Header></Header>
 
         <Routes>
