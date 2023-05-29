@@ -1,15 +1,15 @@
 import React, { useEffect, useState } from 'react';
-import { getStoredCart } from '../../utilities/fakedb';
+import { clearTheCart, getStoredCart } from '../../utilities/fakedb';
 import fakeData from '../fakeData/index';
 import ReviewItem from '../ReviewItem/ReviewItem';
 import {deleteFromDb} from '../../utilities/fakedb.js';
 import './Review.css';
 import Cart from '../Cart/Cart';
+import { Link } from 'react-router-dom';
+import immgg from '../../images/giphy.gif';
 
 const Review = () => {
   const Data = fakeData;
-  // const [savedProductKey, setSavedProductKey] = useState([]);
-  // const [savedCartData, setSavedCartData] = useState(getStoredCart());
   const [cart, setCart] = useState([]);
   useEffect(() => {
     const savedCartData = getStoredCart();
@@ -23,6 +23,18 @@ const Review = () => {
     setCart(productInfo);
   },[cart]);
 
+  //handlePlaceOrder
+   const [orderPlace, setOrderPlace] = useState(false);
+  const handlePlaceOrder = () => {
+    setCart([]);
+    setOrderPlace(true);
+    clearTheCart();
+  }
+  let thankYou;
+  if (orderPlace) {
+    thankYou = <img src={immgg} alt="" />
+  }
+
 // Handle remove product from product item review list
   const handleRemoveProduct = (productKey) => {
     const newProduct = cart.map(pd => pd.key !== productKey);
@@ -35,10 +47,13 @@ const Review = () => {
       <div className="shop-product">
         {
         cart.map(pd => <ReviewItem items={pd} handleRemoveProduct={handleRemoveProduct}></ReviewItem>)
-      }
+        }
+        {thankYou}
       </div>
       <div className="shop-cart">
-        <Cart cart={cart}></Cart>
+        <Cart cart={cart}>
+            <button onClick={handlePlaceOrder} className='button'>Place Order</button>
+        </Cart>
       </div>
     </div>
   );
