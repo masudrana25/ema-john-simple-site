@@ -1,12 +1,12 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useHistory } from 'react';
 import { clearTheCart, getStoredCart } from '../../utilities/fakedb';
 import fakeData from '../fakeData/index';
 import ReviewItem from '../ReviewItem/ReviewItem';
 import {deleteFromDb} from '../../utilities/fakedb.js';
 import './Review.css';
 import Cart from '../Cart/Cart';
-import { Link } from 'react-router-dom';
 import immgg from '../../images/giphy.gif';
+import { Link } from 'react-router-dom';
 
 const Review = () => {
   const Data = fakeData;
@@ -23,13 +23,12 @@ const Review = () => {
     setCart(productInfo);
   },[cart]);
 
-  //handlePlaceOrder
-   const [orderPlace, setOrderPlace] = useState(false);
-  const handlePlaceOrder = () => {
-    setCart([]);
-    setOrderPlace(true);
-    clearTheCart();
-  }
+  //handle Proceed Checkout
+  const [orderPlace, setOrderPlace] = useState(false);
+  // const history = useHistory();
+  // const handleCheckout = () => {
+  //   history.push('/shipment');
+  // }
   let thankYou;
   if (orderPlace) {
     thankYou = <img src={immgg} alt="" />
@@ -52,7 +51,7 @@ const Review = () => {
       </div>
       <div className="shop-cart">
         <Cart cart={cart}>
-            <button onClick={handlePlaceOrder} className='button'>Place Order</button>
+            <Link to="/shipment"><button  className='button'>Proceed Checkout</button></Link>
         </Cart>
       </div>
     </div>

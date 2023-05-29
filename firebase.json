@@ -1,0 +1,17 @@
+{
+  "hosting": {
+    "public": "Build",
+     "site": "ema-john-simple-site-by-masud",
+    "ignore": [
+      "firebase.json",
+      "**/.*",
+      "**/node_modules/**"
+    ],
+    "rewrites": [
+      {
+        "source": "**",
+        "destination": "/index.html"
+      }
+    ]
+  }
+}

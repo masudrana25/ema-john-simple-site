@@ -57,7 +57,4 @@ const Shop = () => {
   );
 };
 
-function Data(params) {
-  
-}
 export default Shop;
