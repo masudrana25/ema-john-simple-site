@@ -1,11 +1,7 @@
-import { signInWithPopup } from "firebase/auth";
-import { auth, provider } from './firebase.config';
 import { useContext, useState } from 'react';
-import { createUserWithEmailAndPassword, signInWithEmailAndPassword, updateProfile, FacebookAuthProvider , signInWithRedirect  } from "firebase/auth";
 import { UserContext } from '../../App';
 import { useLocation, useNavigate } from "react-router-dom";
-
-
+import { signInWithGooglePopup , handleSignOut, handleFBsignInClick, createUserWithEmailAndPass, signInWithEmailAndPass } from './../LoginManage/LoginManage';
 
 function Login() {
 //Login redirect to initial or old page
@@ -15,7 +11,6 @@ function Login() {
 
 //new topic
    const [loginUser, setLoginUser] = useContext(UserContext);
-const FbProvider = new FacebookAuthProvider();
   const [newUser, setNewUser] = useState(false);
 
   const [user, setUser] = useState({
@@ -27,115 +22,50 @@ const FbProvider = new FacebookAuthProvider();
     
   });
 
-  const handleClick = () => {
-    signInWithPopup(auth, provider)
-      .then((result) => {
-        const { displayName, email, photoURL } = result.user;
-        setUser({
-          isSignIn: true,
-          name: displayName,
-          email: email,
-          photo: photoURL
-        })
-      })
-      .catch((error) => {
-        // console.log(error);
-        // console.log(error.message);
-      })
+  const signInWithGoogle = () => {
+    signInWithGooglePopup()
+      .then(res => {
+        handleResponse(res, true);
+      });
   };
-  const handleSignOut = () => {
-    auth.signOut()
-      .then(() => {
-        setUser({
-          isSignIn: false,
-          name: '',
-          email: '',
-          photo: '',
-          error: '',
-          success: false,
-        })
-      })
-      .catch((error) => {
-        // console.log(error);
-        // console.log(error.message);
-      })
+  const FBsignIn = () => {
+    handleFBsignInClick()
+      .then(res => {
+        handleResponse(res, true);
+      });
+  };
+  const SignOut = () => {
+    handleSignOut()
+      .then(res => {
+        handleResponse(res, false);
+      });
   };
 
-  const handleFBclick = () => { 
-    FacebookAuthProvider(auth, FbProvider)
-  .then((result) => {
-    // The signed-in user info.
-    const user = result.user;
-    console.log(user);
-    // This gives you a Facebook Access Token. You can use it to access the Facebook API.
-    const credential = FacebookAuthProvider.credentialFromResult(result);
-    const accessToken = credential.accessToken;
-
-    // IdP data available using getAdditionalUserInfo(result)
-    // ...
-  })
-  .catch((error) => {
-    // Handle Errors here.
-    const errorCode = error.code;
-    const errorMessage = error.message;
-    // The email of the user's account used.
-    const email = error.customData.email;
-    // The AuthCredential type that was used.
-    const credential = FacebookAuthProvider.credentialFromError(error);
-
-    // ...
-  });
-  }
+  const handleResponse = (res, redirect) => {
+    setUser(res);
+    setLoginUser(res);
+    if (redirect) {
+      navigate(from, { replace: true });
+    };
+  };
 
   const handleSubmit = (event) => {
-      console.log(user.email, user.password);
     if (newUser && user.email && user.password) {
-      // console.log('submitted successfully');
-      createUserWithEmailAndPassword(auth, user.email, user.password)
-        .then((res) => {
-         const newUserInfo = { ...user };
-            newUserInfo.success = true;
-            newUserInfo.error = '';
-          setUser(newUserInfo);
-          updateUseName(user.name)
-        })
-        .catch((error) => {
-          const errorCode = error.code;
-          const errorMessage = error.message;
-          const newUserInfo = { ...user };
-            newUserInfo.error = errorCode;
-            newUserInfo.success = false;
-            setUser(newUserInfo);
-  });
-
+      createUserWithEmailAndPass(user.name, user.email, user.password)
+        .then(res => {
+        setUser(res);
+        setLoginUser(res);
+        navigate(from, { replace: true });
+      })
     };
     if (!newUser && user.email && user.password) {
-      signInWithEmailAndPassword(auth, user.email, user.password)
-        .then((res) => {
-        const newUserInfo = { ...user };
-            newUserInfo.success = true;
-            newUserInfo.error = '';
-          setUser(newUserInfo);
-          setLoginUser(newUserInfo);
-         
-         if (user) {
-        navigate(from, {replace: true});
-      }      
-          console.log('sign is user info ', res.user);
-        })
-      
-        .catch((error) => {
-               const errorCode = error.code;
-          const errorMessage = error.message;
-          const newUserInfo = { ...user };
-            newUserInfo.error = errorCode;
-            newUserInfo.success = false;
-            setUser(newUserInfo);
-          
+      signInWithEmailAndPass(user.email, user.password)
+        .then(res => {
+          handleResponse(res, true);
         });
-    }
-            event.preventDefault();
-  }
+    };
+    event.preventDefault();
+  };
 
   const handleBlur = (event) => {
     // console.log(event.target.name, event.target.value);
@@ -154,28 +84,13 @@ const FbProvider = new FacebookAuthProvider();
       setUser(newUserInfo);
     }
   };
-
-  const updateUseName = name => {
-    updateProfile(auth.currentUser, {
-      displayName: name,
-    })
-      .then(() => {
-        console.log('user name updated successfully',);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-    
-  }
-
-
   return (
     <>
       <div style={{textAlign:'center'}} className="signIn-signOut">
       
-      {/* {
-        user.isSignIn ? <button onClick={handleSignOut}>Sign Out </button> :
-          <button onClick={handleClick}>SignIn with Google </button>
+      {
+        user.isSignIn ? <button onClick={SignOut}>Sign Out </button> :
+          <button onClick={signInWithGoogle}>SignIn with Google </button>
       }
 
       {
@@ -188,7 +103,7 @@ const FbProvider = new FacebookAuthProvider();
         )
         }
         <br />
-        <button className='fb-button' onClick={handleFBclick}>Sign in Using Facebook</button> */}
+        <button className='fb-button' onClick={FBsignIn}>Sign in Using Facebook</button>
       </div> <br /><br />
 
       <div style={{textAlign:'center'}} className='form-section'>
