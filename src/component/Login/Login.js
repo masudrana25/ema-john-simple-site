@@ -87,7 +87,7 @@ function Login() {
   return (
     <>
       <div style={{textAlign:'center'}} className="signIn-signOut">
-      
+      <button onClick={SignOut}>Sign Out </button><br /><br /><br />
       {
         user.isSignIn ? <button onClick={SignOut}>Sign Out </button> :
           <button onClick={signInWithGoogle}>SignIn with Google </button>

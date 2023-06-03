@@ -19,7 +19,7 @@ const Shop = () => {
       return product;
     });
     setCart(previousCartItems);
-  })
+  },[])
   const AddCartHandle = (product) => {
     const sameProduct = cart.find(pd => pd.key === product.key);
     let count = 1;
