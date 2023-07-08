@@ -1,4 +1,4 @@
-import { createUserWithEmailAndPassword, signInWithEmailAndPassword, updateProfile, FacebookAuthProvider, signInWithRedirect } from "firebase/auth";
+import { createUserWithEmailAndPassword, signInWithEmailAndPassword, updateProfile, FacebookAuthProvider, signInWithRedirect,getAuth, sendEmailVerification,sendPasswordResetEmail } from "firebase/auth";
 import { signInWithPopup } from "firebase/auth";
 import { auth, GoogleProvider, facebookProvider } from './firebase.config';
 
@@ -74,6 +74,7 @@ export const createUserWithEmailAndPass = (name, email, password) => {
       newUserInfo.success = true;
       newUserInfo.error = '';
       updateUseName(name);
+      verifyEmail();
       return newUserInfo;
     })
     .catch((error) => {
@@ -115,4 +116,25 @@ const updateUseName = name => {
     });
 };
 
-  
+const verifyEmail = () => {
+  const auth = getAuth();
+  sendEmailVerification(auth.currentUser)
+    .then(() => {
+      // Email verification sent!
+      // ...
+    });
+};
+
+export const resetPassword = email => {
+        const auth = getAuth();
+        sendPasswordResetEmail(auth, email)
+          .then(() => {
+            // Password reset email sent!
+            // ..
+          })
+          .catch((error) => {
+            const errorCode = error.code;
+            const errorMessage = error.message;
+            // ..
+          });
+}

@@ -1,7 +1,7 @@
 import { useContext, useState } from 'react';
 import { UserContext } from '../../App';
 import { useLocation, useNavigate } from "react-router-dom";
-import { signInWithGooglePopup , handleSignOut, handleFBsignInClick, createUserWithEmailAndPass, signInWithEmailAndPass } from './../LoginManage/LoginManage';
+import { signInWithGooglePopup , handleSignOut, handleFBsignInClick, createUserWithEmailAndPass, signInWithEmailAndPass, resetPassword } from './../LoginManage/LoginManage';
 
 function Login() {
 //Login redirect to initial or old page
@@ -119,6 +119,7 @@ function Login() {
           <input type="password" onBlur={handleBlur} name="password" placeholder='Your Password' required /><br />
           <input type="submit" value={newUser ? 'SignUp' : 'SignIn'} />
         </form>
+        <button onClick={()=> resetPassword(user.email)}>Forget or Reset Password</button>
         <p style={{ color: 'red' }}>{user.error}</p>
         {
           user.success && <p style={{ color: 'green' }}>Sign {newUser ? 'up' : 'in'} Success</p>

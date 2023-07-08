@@ -27,12 +27,15 @@ function App() {
           <Route path='/shop' element={<Shop/>} />
           <Route path='/review' element={<Review />} />
           <Route path='/product/:productKey' element={<ProductDetails />} />
+
           <Route path='/inventory' element={
             <PrivateRoutes>
               <Inventory></Inventory>
             </PrivateRoutes>
           }>
+
           </Route>
+          
           <Route path='/shipment' element={
             <PrivateRoutes>
               <Shipment></Shipment>
